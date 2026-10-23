@@ -8,6 +8,7 @@ import 'package:velora_app/features/auth/presentation/widgets/auth_button.dart';
 import 'package:velora_app/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:velora_app/features/auth/presentation/widgets/remember_pass.dart';
 import 'package:velora_app/features/auth/presentation/widgets/socials.dart';
+import 'package:velora_app/features/products/presentation/cubit/product_cubit.dart';
 import 'package:velora_app/main_screen.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -110,7 +111,10 @@ class _LogInScreenState extends State<LogInScreen> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => MainScreen(),
+                                      builder: (context) => BlocProvider(
+                                        create: (context) => ProductCubit(),
+                                        child: MainScreen(),
+                                      ),
                                     ),
                                   );
                                   ScaffoldMessenger.of(context).showSnackBar(

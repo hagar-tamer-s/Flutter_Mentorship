@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:velora_app/core/utils/app_shared_preferences.dart';
 import 'package:velora_app/features/auth/data/models/messages_model.dart';
 import 'package:velora_app/features/auth/data/models/tokens_model.dart';
 
@@ -13,8 +14,9 @@ class RemoteDataSource {
         "https://accessories-eshop.runasp.net/api/auth/login",
         data: {"email": email, "password": pass},
       );
-      log(response.data.toString());
-      return TokensModel.fromJson(response.data);
+      TokensModel tokens = TokensModel.fromJson(response.data);
+      await AppPreferences().setData('token', tokens.accessToken);
+      return tokens;
     } on DioException catch (e) {
       String errorMessage =
           e.response?.data['errors']['generalErrors'] ?? 'Error.......';

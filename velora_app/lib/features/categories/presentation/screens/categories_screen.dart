@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:velora_app/core/constants/custom_app_bar.dart';
 import 'package:velora_app/core/constants/custom_search_bar.dart';
+import 'package:velora_app/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:velora_app/features/categories/presentation/widgets/categories_list_view.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
 
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +37,12 @@ class CategoriesScreen extends StatelessWidget {
                   color: Color(0xff9fa6b2),
                 ),
               ),
-              Expanded(child: CategoriesListView()),
+              Expanded(
+                child: BlocProvider(
+                  create: (context) => CategoryCubit()..getCategory(),
+                  child: CategoriesListView(),
+                ),
+              ),
             ],
           ),
         ),
