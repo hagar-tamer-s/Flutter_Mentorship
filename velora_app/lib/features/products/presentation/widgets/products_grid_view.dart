@@ -41,7 +41,10 @@ class _ProductsGridViewState extends State<ProductsGridView> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProductDetails()),
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ProductDetails(product: state.product[index]),
+                    ),
                   );
                 },
                 child: Card(
