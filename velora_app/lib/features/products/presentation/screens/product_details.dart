@@ -27,9 +27,13 @@ class ProductDetails extends StatelessWidget {
                 "assets/images/Velora Brand Logo.png",
               ),
             ),
-            Text(
-              product.name,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            Expanded(
+              child: Text(
+                product.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
             ),
           ],
         ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RememberPass extends StatelessWidget {
-  const RememberPass({super.key, this.onChanged});
+  const RememberPass({super.key, this.onChanged, required this.value});
+  final bool value;
   final void Function(bool?)? onChanged;
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class RememberPass extends StatelessWidget {
         Row(
           children: [
             Checkbox(
-              value: true,
+              value: value,
               onChanged: onChanged,
               activeColor: Color(0xff8b4d3f),
               shape: RoundedRectangleBorder(

@@ -10,6 +10,8 @@ import 'package:velora_app/features/auth/presentation/widgets/auth_button.dart';
 
 import 'dart:async';
 
+import 'package:velora_app/main_screen.dart';
+
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({super.key, required this.email});
   final String email;
@@ -183,10 +185,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => BlocProvider(
-                                        create: (context) => AuthCubit(),
-                                        child: LogInScreen(),
-                                      ),
+                                      builder: (context) => LogInScreen(),
                                     ),
                                   );
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -266,7 +265,10 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                           ),
                         );
                       } else if (state is AuthSuccessState) {
-                        Navigator.pushReplacementNamed(context, 'MainScreen');
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainScreen()),
+                        );
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text("Your email is verified"),

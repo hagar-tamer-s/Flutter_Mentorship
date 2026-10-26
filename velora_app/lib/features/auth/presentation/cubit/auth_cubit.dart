@@ -7,10 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
   final RemoteDataSource data = RemoteDataSource();
-  Future<void> login(String email, String pass) async {
+  Future<void> login(String email, String pass, bool isRemembered) async {
     emit(AuthLoadingState());
     await data
-        .logIn(email, pass)
+        .logIn(email, pass, isRemembered)
         .then(
           (val) {
             emit(AuthSuccessState(tokens: val));

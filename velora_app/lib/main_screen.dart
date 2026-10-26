@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:velora_app/core/constants/custom_bottom_nav_bar.dart';
 import 'package:velora_app/features/categories/presentation/screens/categories_screen.dart';
+import 'package:velora_app/features/products/presentation/cubit/product_cubit.dart';
 import 'package:velora_app/features/products/presentation/screens/products_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -17,16 +19,19 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screens[currentIndex],
+    return BlocProvider(
+      create: (context) => ProductCubit(),
+      child: Scaffold(
+        body: screens[currentIndex],
 
-      bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: currentIndex,
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }

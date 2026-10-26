@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:velora_app/core/utils/app_shared_preferences.dart';
-import 'package:velora_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:velora_app/features/auth/presentation/screens/log_in_screen.dart';
 
 void main() async {
@@ -15,13 +13,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-
-      home: BlocProvider(
-        create: (context) => AuthCubit(),
-        child: LogInScreen(),
-      ),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: LogInScreen());
   }
 }

@@ -9,13 +9,17 @@ class AuthTextField extends StatelessWidget {
     this.validator,
     this.pre,
     required this.label,
+    required this.isVisible,
+    this.onPressed,
   });
   final String txt;
   final String label;
-  final Icon? icon;
+  final IconData? icon;
   final Icon? pre;
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final void Function()? onPressed;
+  final bool isVisible;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,12 +36,16 @@ class AuthTextField extends StatelessWidget {
           ),
         ),
         TextFormField(
+          obscureText: isVisible,
           validator: validator,
           controller: controller,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: InputDecoration(
             hintText: txt,
-            suffixIcon: icon,
+            suffixIcon: IconButton(
+              onPressed: onPressed,
+              icon: Icon(icon, color: Color(0xff867D7A)),
+            ),
             prefixIcon: pre,
             filled: true,
             fillColor: const Color(0xFFFFFFFF),

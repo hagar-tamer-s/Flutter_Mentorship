@@ -17,14 +17,17 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  bool isVisible = true;
+  bool isVisibleConfirm = true;
+
+  GlobalKey<FormState> key = GlobalKey();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController confirmPassController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> key = GlobalKey();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passController = TextEditingController();
-    TextEditingController confirmPassController = TextEditingController();
-    TextEditingController firstNameController = TextEditingController();
-    TextEditingController lastNameController = TextEditingController();
     return Scaffold(
       backgroundColor: Color(0xffFBF8FC),
       appBar: AppBar(
@@ -70,6 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: [
                             Expanded(
                               child: AuthTextField(
+                                isVisible: false,
                                 validator: (p0) {
                                   return Validator.validateUserName(
                                     firstNameController.text,
@@ -82,6 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             Expanded(
                               child: AuthTextField(
+                                isVisible: false,
                                 validator: (p0) {
                                   return Validator.validateUserName(
                                     lastNameController.text,
@@ -96,6 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ],
                         ),
                         AuthTextField(
+                          isVisible: false,
                           validator: (p0) {
                             return Validator.validateEmail(
                               emailController.text,
@@ -111,6 +117,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
 
                         AuthTextField(
+                          isVisible: isVisible,
                           validator: (p0) {
                             return Validator.validatePassword(
                               passController.text,
@@ -122,13 +129,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Icons.lock_outline,
                             color: Color(0xff867D7A),
                           ),
-                          icon: Icon(
-                            Icons.visibility_outlined,
-                            color: Color(0xff867D7A),
-                          ),
+                          icon: isVisible
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+
+                          onPressed: () {
+                            setState(() {
+                              isVisible = !isVisible;
+                            });
+                          },
+
                           controller: passController,
                         ),
                         AuthTextField(
+                          isVisible: isVisibleConfirm,
                           validator: (p0) {
                             return Validator.validatePassword(
                               confirmPassController.text,
@@ -140,10 +154,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Icons.lock_reset_outlined,
                             color: Color(0xff867D7A),
                           ),
-                          icon: Icon(
-                            Icons.visibility_outlined,
-                            color: Color(0xff867D7A),
-                          ),
+                          icon: isVisibleConfirm
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+
+                          onPressed: () {
+                            setState(() {
+                              isVisibleConfirm = !isVisibleConfirm;
+                            });
+                          },
+
                           controller: confirmPassController,
                         ),
                         SizedBox(
