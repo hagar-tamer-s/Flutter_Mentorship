@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:velora_app/core/utils/app_shared_preferences.dart';
 import 'package:velora_app/features/data/model/category_model.dart';
@@ -37,7 +39,6 @@ class DataSource {
         CategoryModel category = CategoryModel.fromJson(element);
         categories.add(category);
       }
-
       return categories;
     } on DioException catch (e) {
       throw Exception(e.message);
@@ -56,5 +57,14 @@ class DataSource {
     // } catch (e) {
     //   rethrow;
     // }
+  }
+
+  Future<void> deleteProduct(String id) async {
+    try {
+      await dio.delete("https://accessories-eshop.runasp.net/api/products/$id");
+      log("Product with id: {$id} is deleted");
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
   }
 }

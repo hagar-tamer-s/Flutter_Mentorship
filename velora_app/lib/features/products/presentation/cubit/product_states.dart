@@ -12,3 +12,9 @@ class ProductSuccessState extends ProductStates {
 }
 
 class ProductFailureState extends ProductStates {}
+
+class DeleteProductLoading extends ProductStates {}
+
+class DeleteProductFailure extends ProductStates {}
+
+class DeleteProductSuccess extends ProductStates {}
