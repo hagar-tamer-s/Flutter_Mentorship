@@ -100,4 +100,28 @@ class AppPreferences {
   bool isLoggedInUser() {
     return _prefs.containsKey("userModel");
   }
+
+  static const String accessTokenKey = 'access_token';
+  static const String refreshTokenKey = 'refresh_token';
+
+  Future<void> saveTokens({
+    required String accessToken,
+    required String refreshToken,
+  }) async {
+    await setData(accessTokenKey, accessToken);
+    await setData(refreshTokenKey, refreshToken);
+  }
+
+  String? getAccessToken() {
+    return getData(accessTokenKey);
+  }
+
+  String? getRefreshToken() {
+    return getData(refreshTokenKey);
+  }
+
+  Future<void> clearTokens() async {
+    await removeData(accessTokenKey);
+    await removeData(refreshTokenKey);
+  }
 }

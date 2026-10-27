@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:velora_app/core/network/dio_helper.dart';
 import 'package:velora_app/core/utils/app_shared_preferences.dart';
 import 'package:velora_app/features/auth/presentation/screens/log_in_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppPreferences().init();
+  DioHelper.init();
   runApp(const MyApp());
 }
 

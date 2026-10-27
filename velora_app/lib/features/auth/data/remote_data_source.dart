@@ -1,25 +1,24 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:velora_app/core/network/dio_helper.dart';
 import 'package:velora_app/core/utils/app_shared_preferences.dart';
 import 'package:velora_app/features/auth/data/models/messages_model.dart';
 import 'package:velora_app/features/auth/data/models/tokens_model.dart';
 
 class RemoteDataSource {
-  final Dio dio = Dio();
-
   Future<TokensModel> logIn(
     String email,
     String pass,
     bool isRemembered,
   ) async {
     try {
-      var response = await dio.post(
-        "https://accessories-eshop.runasp.net/api/auth/login",
+      var response = await DioHelper.dio.post(
+        "api/auth/login",
         data: {"email": email, "password": pass},
       );
       TokensModel tokens = TokensModel.fromJson(response.data);
-      await AppPreferences().setData('token', tokens.accessToken);
+      await AppPreferences().setData('access_token', tokens.accessToken);
 
       await AppPreferences().setData('remember_me', isRemembered);
 
@@ -27,10 +26,10 @@ class RemoteDataSource {
       await AppPreferences().setData('saved_password', pass);
       return tokens;
     } on DioException catch (e) {
-      String errorMessage =
-          e.response?.data['errors']['generalErrors'] ?? 'Error.......';
-
-      throw Exception(errorMessage);
+      log("Login Error Response: ${e.response?.data}");
+      throw Exception(e);
+    } catch (e) {
+      throw Exception(e);
     }
   }
 
@@ -41,8 +40,8 @@ class RemoteDataSource {
     String lastName,
   ) async {
     try {
-      var response = await dio.post(
-        "https://accessories-eshop.runasp.net/api/auth/register",
+      var response = await DioHelper.dio.post(
+        "api/auth/register",
         data: {
           "email": email,
           "password": pass,
@@ -51,42 +50,33 @@ class RemoteDataSource {
         },
       );
       log(response.data.toString());
-    } on DioException catch (e) {
-      String errorMessage =
-          e.response?.data['errors']['generalErrors'] ?? 'Error.......';
-
-      throw Exception(errorMessage);
+    } catch (e) {
+      throw Exception(e);
     }
   }
 
   Future<void> verifyEmail(String email, String otp) async {
     try {
-      var response = await dio.post(
-        "https://accessories-eshop.runasp.net/api/auth/verify-email",
+      var response = await DioHelper.dio.post(
+        "api/auth/verify-email",
         data: {"email": email, "otp": otp},
       );
       log(response.data.toString());
-    } on DioException catch (e) {
-      String errorMessage =
-          e.response?.data['errors']['message'] ?? 'Error.......';
-
-      throw Exception(errorMessage);
+    } catch (e) {
+      throw Exception(e);
     }
   }
 
   Future<MessagesModel> resendOTP(String email) async {
     try {
-      var response = await dio.post(
-        "https://accessories-eshop.runasp.net/api/auth/resend-otp",
+      var response = await DioHelper.dio.post(
+        "api/auth/resend-otp",
         data: {"email": email},
       );
 
       return MessagesModel(message: response.data);
-    } on DioException catch (e) {
-      String errorMessage =
-          e.response?.data['errors']['message'] ?? 'Error.......';
-
-      throw Exception(errorMessage);
+    } catch (e) {
+      throw Exception(e);
     }
   }
 }

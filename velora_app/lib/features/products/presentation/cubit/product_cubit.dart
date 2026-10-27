@@ -16,7 +16,7 @@ class ProductCubit extends Cubit<ProductStates> {
         emit(ProductSuccessState(product: val));
       },
       onError: (error) {
-        print(error.toString());
+        print("Cubit Product Error: ${error.toString()}");
         emit(ProductFailureState());
       },
     );

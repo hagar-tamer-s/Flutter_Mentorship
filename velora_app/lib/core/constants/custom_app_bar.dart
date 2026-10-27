@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_toggle_switch/flutter_toggle_switch.dart';
 import 'package:velora_app/features/auth/presentation/screens/log_in_screen.dart';
 
 class CustomAppBar extends StatelessWidget {
